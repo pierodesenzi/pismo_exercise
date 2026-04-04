@@ -3,7 +3,10 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Account;
 import com.example.demo.service.AccountService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/accounts")
@@ -23,5 +26,16 @@ public class AccountController {
     @GetMapping("/{accountId}")
     public Account getAccount(@PathVariable("accountId") Long accountId) {
         return accountService.getAccount(accountId);
+    }
+
+    @GetMapping
+    public List<Account> getAllAccounts() {
+        return accountService.getAllAccounts();
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String handleRuntimeException(RuntimeException e) {
+        return e.getMessage();
     }
 }

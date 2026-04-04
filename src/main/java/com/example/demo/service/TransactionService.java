@@ -1,27 +1,26 @@
 package com.example.demo.service;
 
-import com.example.demo.model.OperationType;
 import com.example.demo.model.Transaction;
 import com.example.demo.repository.AccountRepository;
-import com.example.demo.repository.OperationTypeRepository;
 import com.example.demo.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final AccountRepository accountRepository;
-    private final OperationTypeRepository operationTypeRepository;
+
+    private static final Set<Long> VALID_OPERATION_TYPES = Set.of(1L, 2L, 3L, 4L);
 
     public TransactionService(TransactionRepository transactionRepository,
-                             AccountRepository accountRepository,
-                             OperationTypeRepository operationTypeRepository) {
+                              AccountRepository accountRepository) {
         this.transactionRepository = transactionRepository;
         this.accountRepository = accountRepository;
-        this.operationTypeRepository = operationTypeRepository;
     }
 
     public Transaction createTransaction(Transaction transaction) {
@@ -29,17 +28,17 @@ public class TransactionService {
         accountRepository.findById(transaction.getAccountId())
                 .orElseThrow(() -> new RuntimeException("Account not found"));
 
-        // Validate operation type exists
-        OperationType operationType = operationTypeRepository.findById(transaction.getOperationTypeId())
-                .orElseThrow(() -> new RuntimeException("Operation type not found"));
+        // Validate operation type id
+        Long operationTypeId = transaction.getOperationTypeId();
+        if (!VALID_OPERATION_TYPES.contains(operationTypeId)) {
+            throw new RuntimeException("Operation type not found");
+        }
 
         // Adjust amount sign based on operation type
         Double adjustedAmount = transaction.getAmount();
-        if (operationType.getOperationTypeId() == 1L || operationType.getOperationTypeId() == 2L || operationType.getOperationTypeId() == 3L) {
-            // COMPRA A VISTA, COMPRA PARCELADA, SAQUE -> negative
+        if (operationTypeId == 1L || operationTypeId == 2L || operationTypeId == 3L) {
             adjustedAmount = -Math.abs(adjustedAmount);
-        } else if (operationType.getOperationTypeId() == 4L) {
-            // PAGAMENTO -> positive
+        } else {
             adjustedAmount = Math.abs(adjustedAmount);
         }
         transaction.setAmount(adjustedAmount);
@@ -48,5 +47,14 @@ public class TransactionService {
         transaction.setEventDate(LocalDateTime.now());
 
         return transactionRepository.save(transaction);
+    }
+
+    public List<Transaction> getTransactionsByAccount(Long accountId) {
+        accountRepository.findById(accountId)
+                .orElseThrow(() -> new RuntimeException("Account not found"));
+
+        return transactionRepository.findAll().stream()
+                .filter(t -> t.getAccountId().equals(accountId))
+                .toList();
     }
 }

@@ -4,8 +4,9 @@ This is a Spring Boot application that implements a transaction routine system w
 
 ## Features
 
-- Account management (create and retrieve accounts)
-- Transaction creation with automatic amount sign adjustment based on operation type
+- Account management (create, retrieve accounts, list all accounts)
+- Transaction creation and retrieval by account
+- Operation type management (retrieve operation types)
 - Persistent storage using PostgreSQL
 - Docker containerization
 
@@ -42,10 +43,16 @@ This is a Spring Boot application that implements a transaction routine system w
 - `GET /accounts/{accountId}`: Get account information
   - Response: `{"account_id": 1, "document_number": "12345678900"}`
 
+- `GET /accounts`: List all accounts
+  - Response: Array of account objects
+
 ### Transactions
 - `POST /transactions`: Create a new transaction
   - Request: `{"account_id": 1, "operation_type_id": 4, "amount": 123.45}`
   - Response: Created transaction object
+
+- `GET /transactions/account/{accountId}`: Get transactions for an account
+  - Response: Array of transaction objects
 
 ## Business Rules
 
@@ -82,28 +89,20 @@ The application will be available at `http://localhost:8080`
    mvn spring-boot:run
    ```
 
-## Testing the API
+## Testing
 
-### Create an Account
+The application includes unit and integration tests using JUnit 5 and Spring Boot Test. Tests use an in-memory H2 database for isolation.
+
+### Running Tests
+
 ```bash
-curl -X POST http://localhost:8080/accounts \
-  -H "Content-Type: application/json" \
-  -d '{"document_number": "12345678900"}'
+mvn test
 ```
 
-### Get Account
-```bash
-curl http://localhost:8080/accounts/1
-```
+### Test Coverage
 
-### Create a Transaction
-```bash
-curl -X POST http://localhost:8080/transactions \
-  -H "Content-Type: application/json" \
-  -d '{"account_id": 1, "operation_type_id": 4, "amount": 100.00}'
-```
-
-## Technologies Used
+- `AccountControllerTest`: Tests account creation, retrieval, and listing
+- `TransactionControllerTest`: Tests transaction creation and retrieval by account
 
 - Spring Boot 3.2.0
 - Spring Data JPA
