@@ -66,6 +66,20 @@ This is a Spring Boot application that implements a transaction routine system w
 - Maven
 - Docker and Docker Compose
 
+## API Documentation (Swagger/OpenAPI)
+
+The API includes automatic Swagger UI documentation powered by SpringDoc OpenAPI. Once the application is running, access the documentation at:
+
+- **Interactive Swagger UI**: http://localhost:8080/swagger-ui.html
+- **OpenAPI JSON Spec**: http://localhost:8080/v3/api-docs
+- **OpenAPI YAML Spec**: http://localhost:8080/v3/api-docs.yaml
+
+The Swagger UI provides:
+- Interactive endpoint exploration
+- Request/response schema visualization
+- Try-it-out functionality for all endpoints
+- Error handling documentation
+
 ## Running with Docker
 
 1. Build the application:
@@ -77,6 +91,11 @@ This is a Spring Boot application that implements a transaction routine system w
    ```bash
    docker-compose up --build
    ```
+
+3. Access the application:
+   - API: http://localhost:8080
+   - Swagger UI: http://localhost:8080/swagger-ui.html
+   - Health Check: http://localhost:8080/health
 
 The application will be available at `http://localhost:8080`
 
