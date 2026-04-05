@@ -15,7 +15,18 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final AccountRepository accountRepository;
 
-    private static final Set<Long> VALID_OPERATION_TYPES = Set.of(1L, 2L, 3L, 4L);
+    // Operation type constants
+    private static final Long OP_COMPRA_A_VISTA = 1L;
+    private static final Long OP_COMPRA_PARCELADA = 2L;
+    private static final Long OP_SAQUE = 3L;
+    private static final Long OP_PAGAMENTO = 4L;
+
+    private static final Set<Long> VALID_OPERATION_TYPES = Set.of(
+            OP_COMPRA_A_VISTA,
+            OP_COMPRA_PARCELADA,
+            OP_SAQUE,
+            OP_PAGAMENTO
+    );
 
     public TransactionService(TransactionRepository transactionRepository,
                               AccountRepository accountRepository) {
@@ -36,7 +47,7 @@ public class TransactionService {
 
         // Adjust amount sign based on operation type
         Double adjustedAmount = transaction.getAmount();
-        if (operationTypeId == 1L || operationTypeId == 2L || operationTypeId == 3L) {
+        if (isDebitOperation(operationTypeId)) {
             adjustedAmount = -Math.abs(adjustedAmount);
         } else {
             adjustedAmount = Math.abs(adjustedAmount);
@@ -49,12 +60,22 @@ public class TransactionService {
         return transactionRepository.save(transaction);
     }
 
+    /**
+     * Checks if the operation type is a debit operation (debits account balance).
+     *
+     * @param operationTypeId the operation type ID
+     * @return true if operation is debit (purchase, withdrawal); false if credit (payment)
+     */
+    private boolean isDebitOperation(Long operationTypeId) {
+        return operationTypeId.equals(OP_COMPRA_A_VISTA) ||
+               operationTypeId.equals(OP_COMPRA_PARCELADA) ||
+               operationTypeId.equals(OP_SAQUE);
+    }
+
     public List<Transaction> getTransactionsByAccount(Long accountId) {
         accountRepository.findById(accountId)
                 .orElseThrow(() -> new RuntimeException("Account not found"));
 
-        return transactionRepository.findAll().stream()
-                .filter(t -> t.getAccountId().equals(accountId))
-                .toList();
+        return transactionRepository.findByAccountId(accountId);
     }
-}
+}}
