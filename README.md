@@ -16,7 +16,7 @@ This is a Spring Boot application that implements a transaction routine system w
 
 ### Accounts
 - `account_id`: UUID unique identifier (auto-generated)
-- `document_number`: Client's document number (CPF)
+- `document_number`: Client's document number
 
 ### Operation Types
 - 1: COMPRA_A_VISTA (Cash Purchase)
@@ -37,6 +37,12 @@ This is a Spring Boot application that implements a transaction routine system w
 > This API uses UUIDs (e.g. `550e8400-e29b-41d4-a716-446655440000`) which are cryptographically unpredictable
 > and eliminate enumeration attacks. Production systems should also enforce authorization checks so users
 > can only access their own resources.
+
+> **Security Note:** Database credentials (`postgres` / `password`) are hardcoded in `application.properties`
+> and `docker-compose.yml` for simplicity — this project is an exercise meant to be easy to run locally.
+> Production systems should never embed credentials in source code. Instead, use cluster secrets
+> (e.g. Kubernetes Secrets, AWS Secrets Manager, HashiCorp Vault) and inject them as environment variables
+> at runtime.
 
 ## API Endpoints
 
