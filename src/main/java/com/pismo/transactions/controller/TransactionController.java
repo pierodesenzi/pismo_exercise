@@ -1,7 +1,7 @@
-package com.example.pismo.controller;
+package com.pismo.transactions.controller;
 
-import com.example.pismo.model.Transaction;
-import com.example.pismo.service.TransactionService;
+import com.pismo.transactions.model.Transaction;
+import com.pismo.transactions.service.TransactionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;

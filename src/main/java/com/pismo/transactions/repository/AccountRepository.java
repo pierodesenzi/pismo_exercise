@@ -1,7 +1,7 @@
 
-package com.example.pismo.repository;
+package com.pismo.transactions.repository;
 
-import com.example.pismo.model.Account;
+import com.pismo.transactions.model.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

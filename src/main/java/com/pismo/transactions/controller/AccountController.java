@@ -1,8 +1,8 @@
 
-package com.example.pismo.controller;
+package com.pismo.transactions.controller;
 
-import com.example.pismo.model.Account;
-import com.example.pismo.service.AccountService;
+import com.pismo.transactions.model.Account;
+import com.pismo.transactions.service.AccountService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
-package com.example.pismo.service;
+package com.pismo.transactions.service;
 
-import com.example.pismo.model.Account;
-import com.example.pismo.repository.AccountRepository;
+import com.pismo.transactions.model.Account;
+import com.pismo.transactions.repository.AccountRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

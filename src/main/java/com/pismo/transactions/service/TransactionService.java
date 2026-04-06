@@ -1,8 +1,8 @@
-package com.example.pismo.service;
+package com.pismo.transactions.service;
 
-import com.example.pismo.model.Transaction;
-import com.example.pismo.repository.AccountRepository;
-import com.example.pismo.repository.TransactionRepository;
+import com.pismo.transactions.model.Transaction;
+import com.pismo.transactions.repository.AccountRepository;
+import com.pismo.transactions.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

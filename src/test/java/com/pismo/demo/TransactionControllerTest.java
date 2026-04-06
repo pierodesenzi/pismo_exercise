@@ -1,9 +1,9 @@
-package com.example.pismo;
+package com.pismo.transactions;
 
-import com.example.pismo.model.Account;
-import com.example.pismo.model.Transaction;
-import com.example.pismo.repository.AccountRepository;
-import com.example.pismo.repository.TransactionRepository;
+import com.pismo.transactions.model.Account;
+import com.pismo.transactions.model.Transaction;
+import com.pismo.transactions.repository.AccountRepository;
+import com.pismo.transactions.repository.TransactionRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
