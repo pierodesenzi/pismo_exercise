@@ -116,7 +116,7 @@ The application will be available at `http://localhost:8080`
 
 ## Testing
 
-The application includes unit and integration tests using JUnit 5 and Spring Boot Test. Tests use an in-memory H2 database for isolation.
+The tests are integration tests that boot the full Spring context against an in-memory H2 database, covering the entire stack via HTTP. Service logic is therefore tested indirectly — dedicated service unit tests (with mocked repositories) would be faster and more isolated, but are out of scope for this exercise.
 
 ### Running Tests
 
@@ -127,7 +127,7 @@ mvn test
 ### Test Coverage
 
 - `AccountControllerTest`: Tests account creation, retrieval, and listing
-- `TransactionControllerTest`: Tests transaction creation and retrieval by account
+- `TransactionControllerTest`: Tests transaction creation, amount sign rules, validation, and retrieval
 
 ## Security Considerations
 
