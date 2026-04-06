@@ -26,6 +26,11 @@ public class TransactionController {
         return transactionService.createTransaction(transaction);
     }
 
+    @GetMapping
+    public List<Transaction> getAllTransactions() {
+        return transactionService.getAllTransactions();
+    }
+
     @GetMapping("/account/{accountId}")
     public List<Transaction> getTransactionsByAccount(@PathVariable("accountId") UUID accountId) {
         return transactionService.getTransactionsByAccount(accountId);

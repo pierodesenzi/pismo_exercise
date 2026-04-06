@@ -72,6 +72,10 @@ public class TransactionService {
         return transactionRepository.save(transaction);
     }
 
+    public List<Transaction> getAllTransactions() {
+        return transactionRepository.findAll();
+    }
+
     public List<Transaction> getTransactionsByAccount(UUID accountId) {
         accountRepository.findById(accountId)
                 .orElseThrow(() -> new RuntimeException("Account not found"));

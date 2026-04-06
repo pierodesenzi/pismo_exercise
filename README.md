@@ -1,7 +1,7 @@
 # Transaction Spring Boot Application
 ### Piero Acosta Desenzi
 
-#
+###
 
 This is a Spring Boot application that implements a transaction routine system with accounts, operation types, and transactions.
 
@@ -52,6 +52,9 @@ This is a Spring Boot application that implements a transaction routine system w
 - `POST /transactions`: Create a new transaction
   - Request: `{"account_id": "550e8400-e29b-41d4-a716-446655440000", "operation_type_id": 4, "amount": 10}`
   - Response: Created transaction object
+
+- `GET /transactions`: List all transactions
+  - Response: Array of transaction objects
 
 - `GET /transactions/account/{accountId}`: Get transactions for an account
   - Response: Array of transaction objects
