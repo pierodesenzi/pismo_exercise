@@ -1,8 +1,6 @@
 # Transaction Spring Boot Application
 ### Piero Acosta Desenzi
 
-#
-
 This is a Spring Boot application that implements a transaction routine system with accounts, operation types, and transactions.
 
 ## Features
@@ -31,19 +29,6 @@ This is a Spring Boot application that implements a transaction routine system w
 - `amount`: Transaction amount (negative for purchases/withdrawals, positive for payments)
 - `event_date`: Timestamp of transaction
 
-> **Security Note:** In production-grade software, sequential numeric IDs (1, 2, 3...) are a security risk.
-> They enable **IDOR (Insecure Direct Object Reference)** attacks — a malicious user who receives `account_id: 42`
-> can trivially enumerate `/accounts/1`, `/accounts/2`, etc. to scrape all records.
-> This API uses UUIDs (e.g. `550e8400-e29b-41d4-a716-446655440000`) which are cryptographically unpredictable
-> and eliminate enumeration attacks. Production systems should also enforce authorization checks so users
-> can only access their own resources.
-
-> **Security Note:** Database credentials (`postgres` / `password`) are hardcoded in `application.properties`
-> and `docker-compose.yml` for simplicity — this project is an exercise meant to be easy to run locally.
-> Production systems should never embed credentials in source code. Instead, use cluster secrets
-> (e.g. Kubernetes Secrets, AWS Secrets Manager, HashiCorp Vault) and inject them as environment variables
-> at runtime.
-
 ## API Endpoints
 
 ### Health Check
@@ -63,7 +48,7 @@ This is a Spring Boot application that implements a transaction routine system w
 
 ### Transactions
 - `POST /transactions`: Create a new transaction
-  - Request: `{"account_id": 1, "operation_type_id": 4, "amount": 123.45}`
+  - Request: `{"account_id": "550e8400-e29b-41d4-a716-446655440000", "operation_type_id": 4, "amount": 123.45}`
   - Response: Created transaction object
 
 - `GET /transactions/account/{accountId}`: Get transactions for an account
@@ -138,6 +123,16 @@ mvn test
 
 - `AccountControllerTest`: Tests account creation, retrieval, and listing
 - `TransactionControllerTest`: Tests transaction creation and retrieval by account
+
+## Security Considerations
+
+### Unpredictable IDs
+
+Sequential numeric IDs (1, 2, 3...) enable **IDOR (Insecure Direct Object Reference)** attacks — a malicious user who receives `account_id: 42` can trivially enumerate `/accounts/1`, `/accounts/2`, etc. to scrape all records. This API uses UUIDs (e.g. `550e8400-e29b-41d4-a716-446655440000`), which are cryptographically unpredictable and eliminate enumeration. Production systems should also enforce authorization checks so users can only access their own resources.
+
+### Credentials
+
+Database credentials (`postgres` / `password`) are hardcoded in `application.properties` and `docker-compose.yml` for simplicity — this project is an exercise meant to be easy to run locally. Production systems should never embed credentials in source code. Instead, use cluster secrets (e.g. Kubernetes Secrets, AWS Secrets Manager, HashiCorp Vault) and inject them as environment variables at runtime.
 
 ## Tech Stack
 
