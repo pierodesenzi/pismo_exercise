@@ -48,7 +48,7 @@ This is a Spring Boot application that implements a transaction routine system w
 
 ### Transactions
 - `POST /transactions`: Create a new transaction
-  - Request: `{"account_id": "550e8400-e29b-41d4-a716-446655440000", "operation_type_id": 4, "amount": 123.45}`
+  - Request: `{"account_id": "550e8400-e29b-41d4-a716-446655440000", "operation_type_id": 4, "amount": 10}`
   - Response: Created transaction object
 
 - `GET /transactions/account/{accountId}`: Get transactions for an account
@@ -128,7 +128,7 @@ mvn test
 
 ### Unpredictable IDs
 
-Sequential numeric IDs (1, 2, 3...) enable **IDOR (Insecure Direct Object Reference)** attacks — a malicious user who receives `account_id: 42` can trivially enumerate `/accounts/1`, `/accounts/2`, etc. to scrape all records. This API uses UUIDs (e.g. `550e8400-e29b-41d4-a716-446655440000`), which are cryptographically unpredictable and eliminate enumeration. Production systems should also enforce authorization checks so users can only access their own resources.
+Sequential numeric IDs (1, 2, 3...) enable **IDOR (Insecure Direct Object Reference)** attacks — a malicious user who receives `account_id: 40` can trivially enumerate `/accounts/1`, `/accounts/2`, etc. to scrape all records. This API uses UUIDs (e.g. `550e8400-e29b-41d4-a716-4466554400ba`), which are cryptographically unpredictable and eliminate enumeration. Production systems should also enforce authorization checks so users can only access their own resources.
 
 ### Credentials
 
