@@ -13,21 +13,28 @@ This is a Spring Boot application that implements a transaction routine system w
 ## Data Model
 
 ### Accounts
-- `account_id`: Unique identifier
+- `account_id`: UUID unique identifier (auto-generated)
 - `document_number`: Client's document number (CPF)
 
 ### Operation Types
-- 1: COMPRA A VISTA (Cash Purchase)
-- 2: COMPRA PARCELADA (Installment Purchase)
+- 1: COMPRA_A_VISTA (Cash Purchase)
+- 2: COMPRA_PARCELADA (Installment Purchase)
 - 3: SAQUE (Withdrawal)
 - 4: PAGAMENTO (Payment)
 
 ### Transactions
-- `transaction_id`: Unique identifier
-- `account_id`: Reference to account
+- `transaction_id`: UUID unique identifier (auto-generated)
+- `account_id`: Reference to account (UUID)
 - `operation_type_id`: Reference to operation type
 - `amount`: Transaction amount (negative for purchases/withdrawals, positive for payments)
 - `event_date`: Timestamp of transaction
+
+> **Security Note:** In production-grade software, sequential numeric IDs (1, 2, 3...) are a security risk.
+> They enable **IDOR (Insecure Direct Object Reference)** attacks — a malicious user who receives `account_id: 42`
+> can trivially enumerate `/accounts/1`, `/accounts/2`, etc. to scrape all records.
+> This API uses UUIDs (e.g. `550e8400-e29b-41d4-a716-446655440000`) which are cryptographically unpredictable
+> and eliminate enumeration attacks. Production systems should also enforce authorization checks so users
+> can only access their own resources.
 
 ## API Endpoints
 
@@ -59,6 +66,7 @@ This is a Spring Boot application that implements a transaction routine system w
 - Purchase and withdrawal transactions are stored with negative amounts
 - Payment transactions are stored with positive amounts
 - All transactions are validated against existing accounts and operation types
+- When registering a transaction, the `amount` in `POST /transactions` must always be a **strictly positive** number. Zero and negative values are rejected — the API derives the sign from the operation type, so accepting negative input would produce ambiguous payloads.
 
 ## Prerequisites
 
