@@ -1,15 +1,17 @@
-package com.example.demo.model;
+package com.example.pismo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+
+import java.util.UUID;
 
 @Entity
 @Table(name = "accounts")
 public class Account {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @JsonProperty("account_id")
-    private Long accountId;
+    private UUID accountId;
 
     @Column(name = "document_number", nullable = false, unique = true)
     @JsonProperty("document_number")
@@ -17,16 +19,16 @@ public class Account {
 
     public Account() {}
 
-    public Account(Long accountId, String documentNumber) {
+    public Account(UUID accountId, String documentNumber) {
         this.accountId = accountId;
         this.documentNumber = documentNumber;
     }
 
-    public Long getAccountId() {
+    public UUID getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(Long accountId) {
+    public void setAccountId(UUID accountId) {
         this.accountId = accountId;
     }
 

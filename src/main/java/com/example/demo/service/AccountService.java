@@ -1,22 +1,22 @@
-package com.example.demo.service;
+package com.example.pismo.service;
 
-import com.example.demo.model.Account;
-import com.example.demo.repository.AccountRepository;
+import com.example.pismo.model.Account;
+import com.example.pismo.repository.AccountRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AccountService {
 
     private final AccountRepository accountRepository;
 
-    // Constructor injection
     public AccountService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
-    public Account getAccount(Long id) {
+    public Account getAccount(UUID id) {
         return accountRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Account not found"));
     }

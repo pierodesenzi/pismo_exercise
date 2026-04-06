@@ -1,13 +1,14 @@
-package com.example.demo.service;
+package com.example.pismo.service;
 
-import com.example.demo.model.Transaction;
-import com.example.demo.repository.AccountRepository;
-import com.example.demo.repository.TransactionRepository;
+import com.example.pismo.model.Transaction;
+import com.example.pismo.repository.AccountRepository;
+import com.example.pismo.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class TransactionService {
@@ -38,6 +39,11 @@ public class TransactionService {
         // Validate account exists
         accountRepository.findById(transaction.getAccountId())
                 .orElseThrow(() -> new RuntimeException("Account not found"));
+
+        // Validate amount is positive
+        if (transaction.getAmount() == null || transaction.getAmount() <= 0) {
+            throw new IllegalArgumentException("Transaction amount should be positive");
+        }
 
         // Validate operation type id
         Long operationTypeId = transaction.getOperationTypeId();
@@ -72,10 +78,10 @@ public class TransactionService {
                operationTypeId.equals(OP_SAQUE);
     }
 
-    public List<Transaction> getTransactionsByAccount(Long accountId) {
+    public List<Transaction> getTransactionsByAccount(UUID accountId) {
         accountRepository.findById(accountId)
                 .orElseThrow(() -> new RuntimeException("Account not found"));
 
         return transactionRepository.findByAccountId(accountId);
     }
-}}
+}

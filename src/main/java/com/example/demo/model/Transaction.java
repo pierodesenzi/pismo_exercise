@@ -1,20 +1,21 @@
-package com.example.demo.model;
+package com.example.pismo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "transactions")
 public class Transaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @JsonProperty("transaction_id")
-    private Long transactionId;
+    private UUID transactionId;
 
     @Column(name = "account_id", nullable = false)
     @JsonProperty("account_id")
-    private Long accountId;
+    private UUID accountId;
 
     @Column(name = "operation_type_id", nullable = false)
     @JsonProperty("operation_type_id")
@@ -29,7 +30,7 @@ public class Transaction {
 
     public Transaction() {}
 
-    public Transaction(Long transactionId, Long accountId, Long operationTypeId, Double amount, LocalDateTime eventDate) {
+    public Transaction(UUID transactionId, UUID accountId, Long operationTypeId, Double amount, LocalDateTime eventDate) {
         this.transactionId = transactionId;
         this.accountId = accountId;
         this.operationTypeId = operationTypeId;
@@ -37,19 +38,19 @@ public class Transaction {
         this.eventDate = eventDate;
     }
 
-    public Long getTransactionId() {
+    public UUID getTransactionId() {
         return transactionId;
     }
 
-    public void setTransactionId(Long transactionId) {
+    public void setTransactionId(UUID transactionId) {
         this.transactionId = transactionId;
     }
 
-    public Long getAccountId() {
+    public UUID getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(Long accountId) {
+    public void setAccountId(UUID accountId) {
         this.accountId = accountId;
     }
 
