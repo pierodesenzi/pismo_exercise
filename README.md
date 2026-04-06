@@ -1,4 +1,5 @@
-# Transaction Routine Spring Boot Application
+# Transaction Spring Boot Application
+### Piero Acosta Desenzi
 
 This is a Spring Boot application that implements a transaction routine system with accounts, operation types, and transactions.
 
@@ -6,7 +7,6 @@ This is a Spring Boot application that implements a transaction routine system w
 
 - Account management (create, retrieve accounts, list all accounts)
 - Transaction creation and retrieval by account
-- Operation type management (retrieve operation types)
 - Persistent storage using PostgreSQL
 - Docker containerization
 
@@ -48,7 +48,7 @@ This is a Spring Boot application that implements a transaction routine system w
   - Response: Account object with `account_id`
 
 - `GET /accounts/{accountId}`: Get account information
-  - Response: `{"account_id": 1, "document_number": "12345678900"}`
+  - Response: `{"account_id": "550e8400-e29b-41d4-a716-446655440000", "document_number": "12345678900"}`
 
 - `GET /accounts`: List all accounts
   - Response: Array of account objects
@@ -79,8 +79,8 @@ This is a Spring Boot application that implements a transaction routine system w
 The API includes automatic Swagger UI documentation powered by SpringDoc OpenAPI. Once the application is running, access the documentation at:
 
 - **Interactive Swagger UI**: http://localhost:8080/swagger-ui.html
-- **OpenAPI JSON Spec**: http://localhost:8080/v3/api-docs
-- **OpenAPI YAML Spec**: http://localhost:8080/v3/api-docs.yaml
+- **OpenAPI JSON spec**: http://localhost:8080/api-docs
+- **OpenAPI YAML spec**: http://localhost:8080/api-docs.yaml
 
 The Swagger UI provides:
 - Interactive endpoint exploration
@@ -130,6 +130,8 @@ mvn test
 
 - `AccountControllerTest`: Tests account creation, retrieval, and listing
 - `TransactionControllerTest`: Tests transaction creation and retrieval by account
+
+## Tech Stack
 
 - Spring Boot 3.2.0
 - Spring Data JPA
