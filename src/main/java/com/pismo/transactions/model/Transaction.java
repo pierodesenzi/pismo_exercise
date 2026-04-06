@@ -2,6 +2,7 @@ package com.pismo.transactions.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -22,7 +23,7 @@ public class Transaction {
     private Long operationTypeId;
 
     @Column(nullable = false)
-    private Double amount;
+    private BigDecimal amount;
 
     @Column(name = "event_date", nullable = false)
     @JsonProperty("event_date")
@@ -30,7 +31,7 @@ public class Transaction {
 
     public Transaction() {}
 
-    public Transaction(UUID transactionId, UUID accountId, Long operationTypeId, Double amount, LocalDateTime eventDate) {
+    public Transaction(UUID transactionId, UUID accountId, Long operationTypeId, BigDecimal amount, LocalDateTime eventDate) {
         this.transactionId = transactionId;
         this.accountId = accountId;
         this.operationTypeId = operationTypeId;
@@ -62,11 +63,11 @@ public class Transaction {
         this.operationTypeId = operationTypeId;
     }
 
-    public Double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

@@ -5,6 +5,7 @@ import com.pismo.transactions.repository.AccountRepository;
 import com.pismo.transactions.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -50,7 +51,7 @@ public class TransactionService {
                 .orElseThrow(() -> new RuntimeException("Account not found"));
 
         // Validate amount is positive
-        if (transaction.getAmount() == null || transaction.getAmount() <= 0) {
+        if (transaction.getAmount() == null || transaction.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Transaction amount should be positive");
         }
 
@@ -62,7 +63,7 @@ public class TransactionService {
 
         // Debit operations (purchases, withdrawals) are stored as negative amounts
         if (DEBIT_OPERATION_TYPES.contains(operationTypeId)) {
-            transaction.setAmount(-transaction.getAmount());
+            transaction.setAmount(transaction.getAmount().negate());
         }
 
         // Set event date

@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -54,7 +55,7 @@ public class TransactionControllerTest {
         Transaction transaction = new Transaction();
         transaction.setAccountId(account.getAccountId());
         transaction.setOperationTypeId(4L);
-        transaction.setAmount(200.0);
+        transaction.setAmount(new BigDecimal("200.0"));
 
         mockMvc.perform(post("/transactions")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -75,7 +76,7 @@ public class TransactionControllerTest {
         Transaction transaction = new Transaction();
         transaction.setAccountId(account.getAccountId());
         transaction.setOperationTypeId(1L); // COMPRA_A_VISTA
-        transaction.setAmount(150.0);
+        transaction.setAmount(new BigDecimal("150.0"));
 
         mockMvc.perform(post("/transactions")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -89,7 +90,7 @@ public class TransactionControllerTest {
         Transaction transaction = new Transaction();
         transaction.setAccountId(account.getAccountId());
         transaction.setOperationTypeId(2L); // COMPRA_PARCELADA
-        transaction.setAmount(300.0);
+        transaction.setAmount(new BigDecimal("300.0"));
 
         mockMvc.perform(post("/transactions")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -103,7 +104,7 @@ public class TransactionControllerTest {
         Transaction transaction = new Transaction();
         transaction.setAccountId(account.getAccountId());
         transaction.setOperationTypeId(3L); // SAQUE
-        transaction.setAmount(50.0);
+        transaction.setAmount(new BigDecimal("50.0"));
 
         mockMvc.perform(post("/transactions")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -117,7 +118,7 @@ public class TransactionControllerTest {
         Transaction transaction = new Transaction();
         transaction.setAccountId(account.getAccountId());
         transaction.setOperationTypeId(4L); // PAGAMENTO
-        transaction.setAmount(500.0);
+        transaction.setAmount(new BigDecimal("500.0"));
 
         mockMvc.perform(post("/transactions")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -131,7 +132,7 @@ public class TransactionControllerTest {
         Transaction transaction = new Transaction();
         transaction.setAccountId(account.getAccountId());
         transaction.setOperationTypeId(4L);
-        transaction.setAmount(-100.0);
+        transaction.setAmount(new BigDecimal("-100.0"));
 
         mockMvc.perform(post("/transactions")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -145,7 +146,7 @@ public class TransactionControllerTest {
         Transaction transaction = new Transaction();
         transaction.setAccountId(account.getAccountId());
         transaction.setOperationTypeId(4L);
-        transaction.setAmount(0.0);
+        transaction.setAmount(new BigDecimal("0.0"));
 
         mockMvc.perform(post("/transactions")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -159,7 +160,7 @@ public class TransactionControllerTest {
         Transaction transaction = new Transaction();
         transaction.setAccountId(account.getAccountId());
         transaction.setOperationTypeId(99L); // invalid
-        transaction.setAmount(100.0);
+        transaction.setAmount(new BigDecimal("100.0"));
 
         mockMvc.perform(post("/transactions")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -173,7 +174,7 @@ public class TransactionControllerTest {
         Transaction transaction = new Transaction();
         transaction.setAccountId(UUID.randomUUID()); // Non-existent account
         transaction.setOperationTypeId(4L);
-        transaction.setAmount(300.0);
+        transaction.setAmount(new BigDecimal("300.0"));
 
         mockMvc.perform(post("/transactions")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -195,7 +196,7 @@ public class TransactionControllerTest {
             Transaction t = new Transaction();
             t.setAccountId(account.getAccountId());
             t.setOperationTypeId(4L);
-            t.setAmount(i * 100.0);
+            t.setAmount(new BigDecimal(String.valueOf(i * 100) + ".0"));
             mockMvc.perform(post("/transactions")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(t)))
