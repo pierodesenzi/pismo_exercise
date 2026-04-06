@@ -102,7 +102,7 @@ public class AccountControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(account)))
                 .andExpect(status().isConflict())
-                .andExpect(jsonPath("$.error", is("account already exists")));
+                .andExpect(jsonPath("$.error", is("Account already exists")));
     }
 
     @Test

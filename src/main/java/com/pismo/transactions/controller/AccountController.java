@@ -46,7 +46,7 @@ public class AccountController {
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public Map<String, String> handleDuplicateAccount(DataIntegrityViolationException e) {
-        return Map.of("error", "account already exists");
+        return Map.of("error", "Account already exists");
     }
 
     @ExceptionHandler(RuntimeException.class)
